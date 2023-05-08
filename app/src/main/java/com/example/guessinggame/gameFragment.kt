@@ -1,14 +1,14 @@
 package com.example.guessinggame
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import com.example.guessinggame.databinding.FragmentGameBinding
+import androidx.navigation.findNavController
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 
 class gameFragment : Fragment() {
     private var _binding: FragmentGameBinding? = null
@@ -22,17 +22,8 @@ class gameFragment : Fragment() {
         val view = binding.root
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 
-        viewModel.incorrectGuesses.observe(viewLifecycleOwner, Observer { newValue ->
-            binding.incorrectGuesses.text = "Incorrect guesses: $newValue"
-        })
-
-        viewModel.livesLeft.observe(viewLifecycleOwner, Observer { newValue ->
-            binding.lives.text = "You have $newValue lives left"
-        })
-
-        viewModel.secretWordDisplay.observe(viewLifecycleOwner, Observer { newValue ->
-            binding.word.text = newValue
-        })
+        binding.gameViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.gameOver.observe(viewLifecycleOwner, Observer { newValue ->
             if (newValue) {
